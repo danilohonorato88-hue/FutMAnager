@@ -555,3 +555,28 @@ body {
 .btn-remove:hover {
     color: #ef4444;
 }
+
+.checkbox-item {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.checkbox-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.empty-state {
+    justify-content: center;
+    color: var(--text-muted);
+    font-style: italic;
+    background: transparent;
+    border: 1px dashed var(--border-color);
+}
+
+.role-title {
+    color: #94a3b8;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
