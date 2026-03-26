@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutManager - Organização de Futsal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="app-container glass-panel">
+        <header class="header">
+            <div class="logo">
+                <i class="fa-solid fa-futbol header-icon"></i>
+                <h1>FutManager</h1>
+            </div>
+            <div class="match-setup input-group">
+                <input type="date" id="match-date" class="glass-input" title="Data do jogo">
+                <input type="time" id="match-time" class="glass-input" title="Hora do jogo">
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-target="tab-players"><i class="fa-solid fa-users"></i> Elenco</button>
+            <button class="tab-btn" data-target="tab-confirmations"><i class="fa-solid fa-clipboard-check"></i>
+                Confirmações</button>
+            <button class="tab-btn" data-target="tab-arrivals"><i class="fa-solid fa-stopwatch"></i> Chegadas e
+                Sorteio</button>
+        </nav>
+
+        <main class="content">
+            <!-- TAB: ELENCO (PLAYERS) -->
+            <section id="tab-players" class="tab-pane active fade-in">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-user-plus"></i> Adicionar Jogador</h2>
+                </div>
+
+                <form id="add-player-form" class="add-player-form">
+                    <input type="text" id="player-name" class="glass-input" placeholder="Nome do jogador" required>
+                    <div class="role-selector">
+                        <label class="radio-label">
+                            <input type="radio" name="player-role" value="linha" checked>
+                            <span class="radio-custom"><i class="fa-solid fa-shoe-prints"></i> Linha</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="player-role" value="goleiro">
+                            <span class="radio-custom"><i class="fa-solid fa-hands"></i> Goleiro</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="primary-btn"><i class="fa-solid fa-plus"></i> Adicionar</button>
+                </form>
+
+                <div class="lists-container">
+                    <div class="list-card glass-panel-inner">
+                        <h3>Jogadores de Linha (<span id="count-linha">0</span>)</h3>
+                        <ul id="list-linha" class="player-list"></ul>
+                    </div>
+                    <div class="list-card glass-panel-inner">
+                        <h3>Goleiros (<span id="count-goleiro">0</span>)</h3>
+                        <ul id="list-goleiro" class="player-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: CONFIRMATIONS -->
+            <section id="tab-confirmations" class="tab-pane fade-in">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-clipboard-check"></i> Confirmar Presença</h2>
+                    <p class="subtitle">Jogadores que participarão do jogo</p>
+                </div>
+
+                <div class="confirmation-selector">
+                    <select id="confirm-player-select" class="glass-input">
+                        <option value="" disabled selected>Selecione um jogador...</option>
+                    </select>
+                    <button id="btn-confirm-player" class="primary-btn"><i class="fa-solid fa-check"></i>
+                        Confirmar</button>
+                </div>
+
+                <div class="lists-container">
+                    <div class="list-card glass-panel-inner">
+                        <h3>Confirmados: Linha (<span id="count-confirmed-linha">0</span>)</h3>
+                        <ul id="confirmed-list-linha" class="player-list ordered-list"></ul>
+                    </div>
+                    <div class="list-card glass-panel-inner">
+                        <h3>Confirmados: Goleiros (<span id="count-confirmed-goleiro">0</span>)</h3>
+                        <ul id="confirmed-list-goleiro" class="player-list ordered-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: ARRIVALS AND DRAFT -->
+            <section id="tab-arrivals" class="tab-pane fade-in">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-stopwatch"></i> Chegadas na Quadra</h2>
+                    <p class="subtitle">Ordene por chegada para o sorteio inicial</p>
+                </div>
+
+                <div class="arrival-action-area">
+                    <select id="arrival-player-select" class="glass-input">
+                        <option value="" disabled selected>Marcar chegada de...</option>
+                    </select>
+                    <button id="btn-mark-arrival" class="primary-btn accent"><i class="fa-solid fa-map-pin"></i>
+                        Chegou</button>
+                </div>
+
+                <div class="lists-container">
+                    <div class="list-card glass-panel-inner">
+                        <h3><i class="fa-solid fa-ranking-star"></i> Prontos para Sorteio (Top 8 Linha + 2 Goleiros)
+                        </h3>
+                        <ul id="draft-pool-list" class="player-list ordered-list highlight-list"></ul>
+                        <div class="draft-action">
+                            <button id="btn-run-draft" class="action-btn glow" disabled><i
+                                    class="fa-solid fa-random"></i> Sortear Times Iniciais</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="share-area" style="padding: 10px; border-radius: 15px;">
+                    <!-- DRAFT RESULTS -->
+                    <div id="draft-results" class="draft-results hidden">
+                        <h3 class="result-title">Times que começam jogando</h3>
+                        <div class="teams-container">
+                            <div class="team-card team-a glass-panel-inner">
+                                <h4>Time A</h4>
+                                <ul id="team-a-list" class="player-list"></ul>
+                            </div>
+                            <div class="team-card team-b glass-panel-inner">
+                                <h4>Time B</h4>
+                                <ul id="team-b-list" class="player-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-card glass-panel-inner next-teams-card">
+                        <h3><i class="fa-solid fa-hourglass-half"></i> Próximos Times (Ordem de Confirmação)</h3>
+                        <p class="instruction">Os próximos times são formados automaticamente seguindo a ordem de quem
+                            confirmou presença primeiro.</p>
+                        <div id="next-teams-container" class="next-teams-container">
+                            <!-- Gerado via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: center; margin-top: 25px;">
+                    <button id="btn-share" class="action-btn glow" style="max-width: 300px;"><i
+                            class="fa-solid fa-camera"></i> Salvar Imagem dos Times</button>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
