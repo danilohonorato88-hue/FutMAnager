@@ -206,8 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             els.imageHeader.style.display = 'block';
         }
         
-        els.shareArea.style.background = '#0f172a';
-        els.shareArea.style.padding = '25px';
+        els.shareArea.classList.add('export-mode');
 
         // Render the canvas
         if (window.html2canvas) {
@@ -217,8 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).then(canvas => {
                 removeBtns.forEach(btn => btn.style.display = '');
                 els.imageHeader.style.display = 'none';
-                els.shareArea.style.background = 'transparent';
-                els.shareArea.style.padding = '15px';
+                els.shareArea.classList.remove('export-mode');
                 
                 els.btnShare.innerHTML = originalText;
                 els.btnShare.disabled = false;
@@ -236,13 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Erro ao gerar imagem", err);
                 removeBtns.forEach(btn => btn.style.display = '');
                 els.imageHeader.style.display = 'none';
-                els.shareArea.style.background = 'transparent';
-                els.shareArea.style.padding = '15px';
+                els.shareArea.classList.remove('export-mode');
                 els.btnShare.innerHTML = originalText;
                 els.btnShare.disabled = false;
             });
         }
     });
+
 
     els.btnFinishMatch.addEventListener('click', () => {
         if(confirm("Tem certeza que deseja finalizar a partida de hoje? Isso irá limpar todas as confirmações e chegadas, mas o elenco será mantido.")) {

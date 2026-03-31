@@ -580,3 +580,95 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+
+/* Mobile Optimization adjustments */
+@media (max-width: 600px) {
+    body {
+        padding: 5px;
+    }
+    .app-container {
+        padding: 15px;
+        margin-top: 5px;
+        border-radius: 16px;
+    }
+    .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+    .match-setup {
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .glass-input {
+        width: 100%;
+        font-size: 16px; /* prevent iOS zoom */
+        margin-bottom: 5px;
+    }
+    .add-player-form, .confirmation-selector, .arrival-action-area {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .role-selector {
+        justify-content: space-around;
+        width: 100%;
+    }
+    .primary-btn, .action-btn {
+        width: 100%;
+        margin-top: 5px;
+    }
+    .action-buttons-group {
+        flex-direction: column;
+    }
+    .action-buttons-group button {
+        max-width: 100% !important;
+    }
+    .tabs {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    .tab-btn {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+}
+
+/* Export Mode for html2canvas */
+.export-mode {
+    background-color: #0f172a !important;
+    padding: 20px !important;
+    border-radius: 0 !important;
+}
+.export-mode .glass-panel-inner {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+.export-mode .team-a {
+    background-color: #1e3a8a !important; 
+    border: 2px solid #3b82f6 !important;
+}
+.export-mode .team-a h4 {
+    color: #93c5fd !important;
+}
+.export-mode .team-b {
+    background-color: #7f1d1d !important; 
+    border: 2px solid #ef4444 !important;
+}
+.export-mode .team-b h4 {
+    color: #fca5a5 !important;
+}
+.export-mode .player-item {
+    background-color: #334155 !important;
+    border: 1px solid #475569 !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+.export-mode .player-role-badge {
+    background-color: #0f172a !important;
+}
